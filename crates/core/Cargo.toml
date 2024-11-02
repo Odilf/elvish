@@ -1,0 +1,12 @@
+[package]
+name = "elvish-core"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+color-eyre.workspace = true
+serde = { version = "1.0.203", features = ["derive"] }
+tracing = "0.1.40"
+reqwest = { version = "0.12.8", features = ["blocking"] }
+ron = "0.8.1"
+jiff = "0.1.13"

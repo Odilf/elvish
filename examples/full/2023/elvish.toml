@@ -1,0 +1,4 @@
+year=2023
+solution_dir="./solutions"
+
+# API token does NOT go in here (put in in `.env`)

@@ -1,0 +1,106 @@
+[package]
+name = "aoc-2023"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+color-eyre = "0.6.3"
+elvish = { path = "../../.." }
+glam = "0.29.1"
+nalgebra = "0.33.2"
+ndarray = "0.16.1"
+num = "0.4.3"
+peg = "0.8.4"
+rayon = "1.10.0"
+
+[features]
+default = ["all"]
+
+part1 = []
+part2 = []
+both = ["part1", "part2"]
+
+1 = ["part1"]
+2 = ["part2"]
+b = ["both"]
+
+day01 = []
+day02 = []
+day03 = []
+day04 = []
+day05 = []
+day06 = []
+day07 = []
+day08 = []
+day09 = []
+day10 = []
+day11 = []
+day12 = []
+day13 = []
+day14 = []
+day15 = []
+day16 = []
+day17 = []
+day18 = []
+day19 = []
+day20 = []
+day21 = []
+day22 = []
+day23 = []
+day24 = []
+day25 = []
+
+d01 = ["day01"]
+d02 = ["day02"]
+d03 = ["day03"]
+d04 = ["day04"]
+d05 = ["day05"]
+d06 = ["day06"]
+d07 = ["day07"]
+d08 = ["day08"]
+d09 = ["day09"]
+d10 = ["day10"]
+d11 = ["day11"]
+d12 = ["day12"]
+d13 = ["day13"]
+d14 = ["day14"]
+d15 = ["day15"]
+d16 = ["day16"]
+d17 = ["day17"]
+d18 = ["day18"]
+d19 = ["day19"]
+d20 = ["day20"]
+d21 = ["day21"]
+d22 = ["day22"]
+d23 = ["day23"]
+d24 = ["day24"]
+d25 = ["day25"]
+
+all = [
+	"day01",
+	"day02",
+	"day03",
+	"day04",
+	"day05",
+	"day06",
+	"day07",
+	"day08",
+	"day09",
+	"day10",
+	"day11",
+	"day12",
+	"day13",
+	"day14",
+	"day15",
+	"day16",
+	"day17",
+	"day18",
+	"day19",
+	"day20",
+	"day21",
+	"day22",
+	"day23",
+	"day24",
+	"day25",
+]
+
