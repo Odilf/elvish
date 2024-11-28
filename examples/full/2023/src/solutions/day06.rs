@@ -1,5 +1,3 @@
-elvish::day!(6);
-
 fn parse(input: &str) -> impl Iterator<Item = (i64, i64)> + '_ {
     let mut lines = input
         .lines()
@@ -27,6 +25,7 @@ fn parse_joined(input: &str) -> (i64, i64) {
     (time, distance)
 }
 
+#[elvish::solution(day = 6, example = 288)]
 fn part1(input: &str) -> i64 {
     parse(input)
         .map(|(time, distance)| {
@@ -42,6 +41,7 @@ fn part1(input: &str) -> i64 {
         .product()
 }
 
+#[elvish::solution(day = 6, example = 71503)]
 fn part2(input: &str) -> i64 {
     let (time, distance) = parse_joined(input);
 
@@ -61,9 +61,9 @@ fn part2(input: &str) -> i64 {
     upper_bound - lower_bound + 1
 }
 
-elvish::examples! {
-    r"
+elvish::example!(
+    "
         Time:      7  15   30
         Distance:  9  40  200
-    " => 288, 71503,
-}
+    "
+);

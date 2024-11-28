@@ -1,5 +1,3 @@
-elvish::day!(7);
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 enum Value {
     Joker,
@@ -62,7 +60,7 @@ impl Rank {
         }
 
         bundles.sort_by_key(|&b| std::cmp::Reverse(b));
-        
+
         bundles[0] += jokers;
 
         assert_eq!(bundles.iter().sum::<i32>(), 5);
@@ -109,20 +107,22 @@ fn solve(input: &str, j_is_joker: bool) -> i64 {
         .sum()
 }
 
+#[elvish::solution(day = 7, example = 6440)]
 fn part1(input: &str) -> i64 {
     solve(input, false)
 }
 
+#[elvish::solution(day = 7, example = 5905)]
 fn part2(input: &str) -> i64 {
     solve(input, true)
 }
 
-elvish::examples! {
+elvish::example!(
     r"
         32T3K 765
         T55J5 684
         KK677 28
         KTJJT 220
         QQQJA 483
-    " => 6440, 5905,
-}
+    "
+);

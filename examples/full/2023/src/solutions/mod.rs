@@ -1,6 +1,4 @@
-elvish::declare_all_days!();
-
-// elvish::macros::declare_days_up_to!(25);
+elvish::declare::modules!();
 
 // Generates:
 //
@@ -15,4 +13,3 @@ elvish::declare_all_days!();
 // ```
 //
 // ...and so on, up to day 25.
-

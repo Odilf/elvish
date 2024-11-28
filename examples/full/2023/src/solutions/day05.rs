@@ -1,8 +1,6 @@
 use rayon::{prelude::*, slice::ParallelSlice};
 use std::cmp::Ordering;
 
-elvish::day!(5);
-
 #[derive(Debug, Clone, PartialEq, Eq)]
 struct Range {
     destination_start: i64,
@@ -92,6 +90,7 @@ fn find_lowest_seed(seeds: impl ParallelIterator<Item = i64>, maps: &[Map]) -> O
         .min()
 }
 
+#[elvish::solution(day=5, example=35)]
 fn part1(input: &str) -> i64 {
     let (seeds, maps) = parser::whole(input).unwrap();
 
@@ -101,6 +100,7 @@ fn part1(input: &str) -> i64 {
 /// This implementation is very brute-forcey, but with the help of
 /// rayon it does compute the proper solution in a bit under 10s on
 /// my machine.
+#[elvish::solution(day=5, example=46)]
 fn part2(input: &str) -> i64 {
     let (seed_ranges, maps) = parser::whole(input).unwrap();
 
@@ -113,40 +113,39 @@ fn part2(input: &str) -> i64 {
     find_lowest_seed(seeds, &maps).unwrap()
 }
 
-elvish::examples! {
-    r"
-        seeds: 79 14 55 13
+elvish::example!("
+    seeds: 79 14 55 13
 
-        seed-to-soil map:
-        50 98 2
-        52 50 48
+    seed-to-soil map:
+    50 98 2
+    52 50 48
 
-        soil-to-fertilizer map:
-        0 15 37
-        37 52 2
-        39 0 15
+    soil-to-fertilizer map:
+    0 15 37
+    37 52 2
+    39 0 15
 
-        fertilizer-to-water map:
-        49 53 8
-        0 11 42
-        42 0 7
-        57 7 4
+    fertilizer-to-water map:
+    49 53 8
+    0 11 42
+    42 0 7
+    57 7 4
 
-        water-to-light map:
-        88 18 7
-        18 25 70
+    water-to-light map:
+    88 18 7
+    18 25 70
 
-        light-to-temperature map:
-        45 77 23
-        81 45 19
-        68 64 13
+    light-to-temperature map:
+    45 77 23
+    81 45 19
+    68 64 13
 
-        temperature-to-humidity map:
-        0 69 1
-        1 0 69
+    temperature-to-humidity map:
+    0 69 1
+    1 0 69
 
-        humidity-to-location map:
-        60 56 37
-        56 93 4
-    " => 35, 46,
-}
+    humidity-to-location map:
+    60 56 37
+    56 93 4
+");
+

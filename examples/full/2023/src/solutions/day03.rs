@@ -1,8 +1,6 @@
 use glam::i32::IVec2;
 use std::collections::{HashMap, HashSet};
 
-elvish::day!(3);
-
 #[derive(Debug, Clone, Copy)]
 struct NumberData {
     value: i32,
@@ -83,6 +81,7 @@ fn neighbor_offsets() -> impl Iterator<Item = IVec2> {
         .map(|(dx, dy)| IVec2::new(dx, dy))
 }
 
+#[elvish::solution(day=3, example=4361)]
 fn part1(input: &str) -> i32 {
     let (mut numbers, symbols) = parse(input, |c| c != '.');
 
@@ -106,6 +105,7 @@ fn get_exacly_two(mut iter: impl Iterator<Item = i32>) -> Option<[i32; 2]> {
     Some([first, second])
 }
 
+#[elvish::solution(day=3, example=467835)]
 fn part2(input: &str) -> i32 {
     let (mut numbers, symbols) = parse(input, |c| c == '*');
 
@@ -123,20 +123,15 @@ fn part2(input: &str) -> i32 {
     output
 }
 
-// elvish::examples! {
-//     let input = r"
-//         467..114..
-//         ...*......
-//         ..35..633.
-//         ......#...
-//         617*......
-//         .....+.58.
-//         ..592.....
-//         ......755.
-//         ...$.*....
-//         .664.598..
-//     "; 
-//
-//     part1(input) == 4361,
-//     part2(input) == 467835,
-// }
+elvish::example!("
+        467..114..
+        ...*......
+        ..35..633.
+        ......#...
+        617*......
+        .....+.58.
+        ..592.....
+        ......755.
+        ...$.*....
+        .664.598..
+");

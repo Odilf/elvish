@@ -10,3 +10,5 @@ tracing = "0.1.40"
 reqwest = { version = "0.12.8", features = ["blocking"] }
 ron = "0.8.1"
 jiff = "0.1.13"
+tl = "0.7.8"
+mdka = "1.2.10"

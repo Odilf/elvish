@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 
-elvish::day!(8);
-
 type Entry<'a> = (&'a str, &'a str);
 type Map<'a> = HashMap<&'a str, Entry<'a>>;
 
@@ -35,6 +33,7 @@ fn get_next<'a>(current_node: &str, instructions: &[u8], i: usize, edges: &Map<'
     }
 }
 
+#[elvish::solution(day = 8, example = 6)]
 fn part1(input: &str) -> i64 {
     let (instructions, edges) = parser::whole(input).unwrap();
 
@@ -50,6 +49,7 @@ fn part1(input: &str) -> i64 {
     unreachable!()
 }
 
+#[elvish::solution(day = 8, example = 6)]
 fn part2(input: &str) -> i64 {
     let (instructions, edges) = parser::whole(input).unwrap();
 
@@ -73,16 +73,16 @@ fn part2(input: &str) -> i64 {
         .fold(1, num::integer::lcm)
 }
 
-elvish::examples! {
-    r"
+elvish::example!(
+    part1: "
         LLR
 
         AAA = (BBB, BBB)
         BBB = (AAA, ZZZ)
         ZZZ = (ZZZ, ZZZ)
-    " => 6,
+    ",
 
-    r"
+    part2: "
         LR
 
         11A = (11B, XXX)
@@ -93,5 +93,5 @@ elvish::examples! {
         22C = (22Z, 22Z)
         22Z = (22B, 22B)
         XXX = (XXX, XXX)
-    " => 6,
-}
+    ",
+);

@@ -34,9 +34,7 @@ pub fn run_day_part<Solutions: Part<PART, DAY>, const DAY: u8, const PART: u8>(
 }
 
 // TODO: for this too
-pub fn run_day<Solutions: Day<DAY>, const DAY: u8>(
-    input: &str,
-) -> [String; 2] {
+pub fn run_day<Solutions: Day<DAY>, const DAY: u8>(input: &str) -> [String; 2] {
     let part1 = run_day_part::<Solutions, DAY, 1>(input);
     let part2 = run_day_part::<Solutions, DAY, 2>(input);
 
