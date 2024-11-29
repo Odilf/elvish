@@ -1,9 +1,9 @@
 use proc_macro::TokenStream;
 use syn::parse_macro_input;
 
-mod solution;
 mod declare;
 mod example;
+mod solution;
 
 #[proc_macro_attribute]
 pub fn solution(attr: TokenStream, item: TokenStream) -> TokenStream {

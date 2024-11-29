@@ -10,7 +10,7 @@ pub struct Day {
     pub description_2: Option<String>,
 }
 
-fn get_env_year() -> eyre::Result<u16> {
+pub fn get_env_year() -> eyre::Result<u16> {
     Ok(std::env::var("YEAR")?.parse()?)
 }
 
@@ -33,6 +33,7 @@ pub fn get_session_token() -> eyre::Result<String> {
 pub fn get(year: u16, day: u8, session_token: &str) -> eyre::Result<Day> {
     read_day(day).or_else(|_| {
         tracing::warn!("Day data not found in `.elvish`, fetching day...");
+        eprintln!("Day data not found in `.elvish`, fetching day...");
         let data = fetch_day(year, day, session_token)?;
         let serialized = ron::to_string(&data)?;
 
@@ -76,13 +77,20 @@ fn fetch_day_input(
     fetch_aoc(client, &url, session_token)
 }
 
-fn fetch_desc(client: &Client, year: u16, day: u8, session_token: &str) -> eyre::Result<(String, Option<String>)> {
+fn fetch_desc(
+    client: &Client,
+    year: u16,
+    day: u8,
+    session_token: &str,
+) -> eyre::Result<(String, Option<String>)> {
     let url = format!("https://adventofcode.com/{year}/day/{day}");
 
     let html = fetch_aoc(client, &url, session_token)?;
     let dom = tl::parse(&html, tl::ParserOptions::default())?;
     let parser = dom.parser();
-    let elements = dom.query_selector(".day-desc").expect("There should be at least one element with `day-desc` in AOC pages.");
+    let elements = dom
+        .query_selector(".day-desc")
+        .expect("There should be at least one element with `day-desc` in AOC pages.");
 
     let mut descriptions = elements.map(|element| {
         let inner_html = element.get(parser).unwrap().inner_html(parser);
@@ -91,7 +99,9 @@ fn fetch_desc(client: &Client, year: u16, day: u8, session_token: &str) -> eyre:
         markdown
     });
 
-    let desc1 = descriptions.next().expect("AOC should have at least one day description marked with a `day-desc` class.");
+    let desc1 = descriptions
+        .next()
+        .expect("AOC should have at least one day description marked with a `day-desc` class.");
     let desc2 = descriptions.next();
 
     Ok((desc1, desc2))

@@ -9,21 +9,19 @@ use syn::{
 pub enum Example {
     Single(Expr),
     Multiple {
-        parts: syn::punctuated::IntoIter<PartExample>,
+        parts: Punctuated<PartExample, Token![,]>,
     },
 }
 
 impl Parse for Example {
     fn parse(input: ParseStream) -> syn::Result<Self> {
-        let parser = Punctuated::<PartExample, Token![,]>::parse_terminated;
+        let parser = Punctuated::parse_terminated;
 
-        let Ok(punctuated) = input.call(parser) else {
+        let Ok(parts) = input.call(parser) else {
             return Ok(Example::Single(input.parse()?));
         };
 
-        Ok(Example::Multiple {
-            parts: punctuated.into_iter(),
-        })
+        Ok(Example::Multiple { parts })
     }
 }
 
@@ -45,6 +43,7 @@ impl Example {
                 let mut part_indices = [0, 0];
 
                 parts
+                    .into_iter()
                     .map(|part| {
                         let index = &mut part_indices[part.part as usize];
                         let expansion = part.expand(*index);

@@ -2,12 +2,12 @@ pub use elvish_core::*;
 pub use elvish_macros as macros;
 
 pub use color_eyre::eyre::{self, WrapErr as _};
-pub use elvish_macros::{example, solution, available_days};
+pub use elvish_macros::{available_days, example, solution};
 pub use indoc::indoc;
 
 pub mod declare {
-    pub use elvish_macros::declare_run_fn as run_fns;
     pub use elvish_macros::declare_modules as modules;
+    pub use elvish_macros::declare_run_fn as run_fns;
 }
 
 use clap::Parser;
