@@ -1,7 +1,5 @@
 use std::array;
 
-elvish::day!(15);
-
 fn hash(input: &str) -> i64 {
     let mut current = 0;
     for byte in input.bytes() {
@@ -13,11 +11,13 @@ fn hash(input: &str) -> i64 {
     current
 }
 
+#[elvish::solution(day = 15, example = 1320)]
 fn part1(input: &str) -> i64 {
     input.trim().split(',').map(|s| hash(s)).sum()
 }
 
-fn part2<'a>(input: &'a str) -> i64 {
+#[elvish::solution(day = 15, example = 145)]
+fn part2(input: &str) -> i64 {
     let mut boxes: [_; 256] = array::from_fn(|_| Vec::<(&str, i64)>::new());
 
     for s in input.trim().split(',') {
@@ -59,6 +59,4 @@ fn part2<'a>(input: &'a str) -> i64 {
         .sum()
 }
 
-elvish::examples! {
-    "rn=1,cm-,qp=3,cm=2,qp-,pc=4,ot=9,ab=5,pc-,pc=6,ot=7" => 1320, 145,
-}
+elvish::example!("rn=1,cm-,qp=3,cm=2,qp-,pc=4,ot=9,ab=5,pc-,pc=6,ot=7");

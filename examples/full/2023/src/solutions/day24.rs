@@ -1,7 +1,5 @@
 use nalgebra::{vector, Matrix3, Matrix6};
 
-elvish::day!(24);
-
 type Vec3 = nalgebra::Vector3<i64>;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -34,6 +32,7 @@ peg::parser! {
     }
 }
 
+#[elvish::solution(day = 24)]
 fn part1(input: &str) -> i64 {
     solve1(input, 200_000_000_000_000, 400_000_000_000_000)
 }
@@ -114,6 +113,7 @@ fn god_throw(lines: [Line; 3]) -> Option<(Vec3, Vec3)> {
     Some((position, velocity))
 }
 
+#[elvish::solution(day = 24)]
 fn part2(input: &str) -> i64 {
     let lines = input
         .lines()

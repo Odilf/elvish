@@ -1,5 +1,3 @@
-elvish::day!(13);
-
 fn parse(input: &str) -> impl Iterator<Item = (Vec<Vec<bool>>, Vec<Vec<bool>>)> + '_ {
     input.split("\n\n").map(|block| {
         let rows: Vec<Vec<bool>> = block
@@ -30,7 +28,7 @@ fn check_reflections(rows: &[Vec<bool>], index: usize) -> bool {
     }
 }
 
-/// Returns index n. This means that if there's a reflection in n, then c[n] == c[n - 1], c[n + 1] == c[n - 2], ..., c[n + k] == c[n - k - 1].
+/// Returns index n. This means that if there's a reflection in `n`, then `c[n] == c[n - 1]`, `c[n + 1] == c[n - 2]`, ..., `c[n + k] == c[n - k - 1]`.
 fn find_reflections(rows: &[Vec<bool>], ignore: Option<usize>) -> Option<usize> {
     if rows.len() <= 1 {
         return None;
@@ -49,12 +47,14 @@ fn find_reflections(rows: &[Vec<bool>], ignore: Option<usize>) -> Option<usize> 
     find_reflections(&rows[..half], ignore)
         .and_then(|first| check(first))
         .or_else(|| {
+            // This line only works in release mode. 
             find_reflections(&rows[half..], ignore.map(|i| i - half))
                 .and_then(|second| check(half + second))
         })
         .or_else(|| check(half))
 }
 
+#[elvish::solution(day = 13, example = 405)]
 fn part1(input: &str) -> usize {
     parse(input)
         .map(|(rows, columns)| {
@@ -65,6 +65,7 @@ fn part1(input: &str) -> usize {
         .sum()
 }
 
+#[elvish::solution(day = 13, example = 400)]
 fn part2(input: &str) -> usize {
     parse(input)
         .enumerate()
@@ -75,25 +76,27 @@ fn part2(input: &str) -> usize {
             let original_row = find_reflections(&rows, None);
             let original_col = find_reflections(&columns, None);
 
-            (0..row_len).find_map(|y| {
-                (0..col_len).find_map(|x| {
-                    rows[y][x] = !rows[y][x];
-                    columns[x][y] = !columns[x][y];
+            (0..row_len)
+                .find_map(|y| {
+                    (0..col_len).find_map(|x| {
+                        rows[y][x] = !rows[y][x];
+                        columns[x][y] = !columns[x][y];
 
-                    let refl_row = find_reflections(&rows, original_row).map(|v| v * 100);
-                    let refl_col = find_reflections(&columns, original_col);
+                        let refl_row = find_reflections(&rows, original_row).map(|v| v * 100);
+                        let refl_col = find_reflections(&columns, original_col);
 
-                    rows[y][x] = !rows[y][x];
-                    columns[x][y] = !columns[x][y];
+                        rows[y][x] = !rows[y][x];
+                        columns[x][y] = !columns[x][y];
 
-                    refl_row.or(refl_col)
+                        refl_row.or(refl_col)
+                    })
                 })
-            }).unwrap()
+                .unwrap()
         })
         .sum()
 }
 
-elvish::examples! {
+elvish::example!(
     "
         #.##..##.
         ..#.##.#.
@@ -110,5 +113,5 @@ elvish::examples! {
         #####.##.
         ..##..###
         #....#..#
-    " => 405, 400,
-}
+    "
+);

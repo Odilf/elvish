@@ -1,7 +1,5 @@
 use std::{collections::HashSet, mem};
 
-elvish::day!(21);
-
 type Vec2 = glam::I64Vec2;
 
 fn parse(input: &str) -> (HashSet<Vec2>, Vec2, i64) {
@@ -40,6 +38,7 @@ const DIRECTIONS: [Vec2; 4] = [
     Vec2::new(-1, 0),
 ];
 
+#[elvish::solution(day = 21)]
 fn part1(input: &str) -> i64 {
     solve1(input, 64)
 }
@@ -80,6 +79,7 @@ fn count_locations(walls: &HashSet<Vec2>, start: Vec2, steps: i64, size: i64) ->
     count
 }
 
+#[elvish::solution(day = 21)]
 fn part2(input: &str) -> i64 {
     const STEPS: i64 = 26_501_365;
 

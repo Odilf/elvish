@@ -1,7 +1,5 @@
 use std::collections::{HashMap, HashSet};
 
-elvish::day!(22);
-
 type Vec3 = glam::I64Vec3;
 
 #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
@@ -101,6 +99,7 @@ fn get_supports(cubes: &Vec<Cube>) -> [HashMap<Cube, Vec<Cube>>; 2] {
     [supported_by, supports]
 }
 
+#[elvish::solution(day = 22, example = 5)]
 fn part1(input: &str) -> i64 {
     let mut cubes = input
         .lines()
@@ -122,6 +121,7 @@ fn part1(input: &str) -> i64 {
         .count() as i64
 }
 
+#[elvish::solution(day = 22, example = 7)]
 fn part2(input: &str) -> i64 {
     let mut cubes = input
         .lines()
@@ -184,7 +184,7 @@ fn topple(
         + 1
 }
 
-elvish::examples! {
+elvish::example!(
     "
         1,0,1~1,2,1
         0,0,2~2,0,2
@@ -193,5 +193,5 @@ elvish::examples! {
         2,0,5~2,2,5
         0,1,6~2,1,6
         1,1,8~1,1,9
-    " => 5, 7,
-}
+    "
+);

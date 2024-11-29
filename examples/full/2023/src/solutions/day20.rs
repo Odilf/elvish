@@ -1,7 +1,5 @@
 use std::collections::{HashMap, VecDeque};
 
-elvish::day!(20);
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
 enum Pulse {
     Low,
@@ -132,6 +130,7 @@ fn press_button(map: &mut HashMap<&str, Module<'_>>, mut f: impl FnMut(&str, Pul
     }
 }
 
+#[elvish::solution(day = 20, example = [32_000_000, 11_687_500])]
 fn part1(input: &str) -> i64 {
     let (mut map, _inv, _nodes) = parse(input);
 
@@ -146,6 +145,7 @@ fn part1(input: &str) -> i64 {
     count.iter().product()
 }
 
+#[elvish::solution(day = 20)]
 fn part2(input: &str) -> i64 {
     let (mut map, inverse, _nodes) = parse(input);
     const TARGET: &str = "rx";
@@ -178,22 +178,20 @@ fn part2(input: &str) -> i64 {
     panic!("Never turns on (or at least until the i64 limit)");
 }
 
-elvish::examples! {
-    part1 {
-        one: "
-            broadcaster -> a, b, c
-            %a -> b
-            %b -> c
-            %c -> inv
-            &inv -> a
-        " => 32_000_000,
+elvish::example!(
+    part1: "
+        broadcaster -> a, b, c
+        %a -> b
+        %b -> c
+        %c -> inv
+        &inv -> a
+    ",
 
-        two: "
-            broadcaster -> a
-            %a -> inv, con
-            &inv -> b
-            %b -> con
-            &con -> output
-        " => 11_687_500,
-    }
-}
+    part1: "
+        broadcaster -> a
+        %a -> inv, con
+        &inv -> b
+        %b -> con
+        &con -> output
+    ",
+);

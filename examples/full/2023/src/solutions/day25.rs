@@ -1,7 +1,5 @@
 use std::collections::{HashMap, HashSet};
 
-elvish::day!(25);
-
 fn parse(input: &str) -> HashMap<&str, Vec<&str>> {
     let mut neighbors = HashMap::new();
     for line in input.lines() {
@@ -22,6 +20,7 @@ fn parse(input: &str) -> HashMap<&str, Vec<&str>> {
     neighbors
 }
 
+#[elvish::solution(day = 25, example = 54)]
 fn part1(input: &str) -> i64 {
     let neighbors = parse(input);
     let nodes = neighbors.keys().copied().collect::<Vec<_>>();
@@ -46,19 +45,20 @@ fn part1(input: &str) -> i64 {
 
         split.remove(&item_to_remove);
     }
-    
+
     let split = split.len() as i64;
     let total = nodes.len() as i64;
 
     split * (total - split)
 }
 
+#[elvish::solution(day = 25)]
 fn part2(_: &str) -> &'static str {
     "Merry Christmas! 🥂"
 }
 
-elvish::examples! {
-    part1 { test: "
+elvish::example!(
+    "
         jqt: rhn xhk nvd
         rsh: frs pzl lsr
         xhk: hfx
@@ -72,5 +72,5 @@ elvish::examples! {
         lsr: lhk
         rzs: qnr cmg lsr rsh
         frs: qnr lhk lsr
-    " => 54 } 
-}
+    "
+);

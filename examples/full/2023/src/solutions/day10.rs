@@ -191,7 +191,7 @@ fn get_loop(map: &HashMap<IVec2, Tile>, start: IVec2) -> HashMap<IVec2, Tile> {
     output
 }
 
-// #[elvish::solution(day=10, example=[4, 4, 8])]
+#[elvish::solution(day=10, example=[4, 4, 8])]
 fn part1(input: &str) -> i64 {
     let (map, start) = parse(input);
 
@@ -200,7 +200,7 @@ fn part1(input: &str) -> i64 {
     main_loop.len() as i64 / 2
 }
 
-// #[elvish::solution(day=10, example=[4, 4, 8, 10])]
+#[elvish::solution(day=10, example=[4, 4, 8, 10])]
 fn part2(input: &str) -> i64 {
     let (map, start) = parse(input);
 

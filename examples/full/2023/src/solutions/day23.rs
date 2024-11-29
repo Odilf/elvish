@@ -1,7 +1,5 @@
 use std::collections::{HashMap, HashSet};
 
-elvish::day!(23);
-
 type Vec2 = glam::I64Vec2;
 
 enum Tile {
@@ -40,6 +38,7 @@ fn parse(input: &str) -> HashMap<Vec2, Tile> {
     map
 }
 
+#[elvish::solution(day = 23, example=94)]
 fn part1(input: &str) -> i64 {
     let map = parse(input);
 
@@ -162,6 +161,7 @@ fn build_graph(
     (nodes, edges, neighbors)
 }
 
+#[elvish::solution(day = 23, example=154)]
 fn part2(input: &str) -> i64 {
     let map = parse(input);
 
@@ -205,7 +205,7 @@ fn longest_graph_path(
     *result
 }
 
-elvish::examples! {
+elvish::example!(
     "
         #.#####################
         #.......#########...###
@@ -230,5 +230,5 @@ elvish::examples! {
         #.###.###.#.###.#.#v###
         #.....###...###...#...#
         #####################.#
-    " => 94, 154,
-}
+    "
+);

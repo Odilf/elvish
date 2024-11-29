@@ -2,8 +2,6 @@ use std::collections::HashMap;
 
 use rayon::{prelude::ParallelIterator, str::ParallelString};
 
-elvish::day!(12);
-
 peg::parser! {
     grammar parser() for str {
         rule number() -> i64
@@ -138,6 +136,7 @@ fn count_arrangments(springs: &[Spring], bundles: &[i64]) -> i64 {
     execute(Data::default(), springs, bundles, &mut HashMap::new())
 }
 
+#[elvish::solution(day = 12, example = 21)]
 fn part1(input: &str) -> i64 {
     input
         .lines()
@@ -148,6 +147,7 @@ fn part1(input: &str) -> i64 {
         .sum()
 }
 
+#[elvish::solution(day = 12, example = 525152)]
 fn part2(input: &str) -> i64 {
     input
         .par_lines()
@@ -164,13 +164,13 @@ fn part2(input: &str) -> i64 {
         .sum()
 }
 
-elvish::examples! {
-    r"
+elvish::example!(
+    "
         ???.### 1,1,3
         .??..??...?##. 1,1,3
         ?#?#?#?#?#?#?#? 1,3,1,6
         ????.#...#... 4,1,1
         ????.######..#####. 1,6,5
         ?###???????? 3,2,1
-    " => 21, 525152,
-}
+    "
+);

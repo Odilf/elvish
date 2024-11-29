@@ -1,7 +1,5 @@
 use ndarray::{Array1, Array2, Axis};
 
-elvish::day!(14);
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Rock {
     Round,
@@ -89,6 +87,7 @@ fn north_stress(grid: &Array2<Option<Rock>>) -> i64 {
         .sum()
 }
 
+#[elvish::solution(day = 14, example = 136)]
 fn part1(input: &str) -> i64 {
     let mut grid = parse(input);
 
@@ -97,6 +96,7 @@ fn part1(input: &str) -> i64 {
     north_stress(&grid)
 }
 
+#[elvish::solution(day = 14, example = 64)]
 fn part2(input: &str) -> i64 {
     let mut grid = parse(input);
     let mut history = Vec::new();
@@ -124,14 +124,13 @@ fn part2(input: &str) -> i64 {
 
             return north_stress(&history[index]);
         }
-
     }
 
     north_stress(&grid)
 }
 
-elvish::examples! {
-    r"
+elvish::example!(
+    "
         O....#....
         O.OO#....#
         .....##...
@@ -142,5 +141,5 @@ elvish::examples! {
         .......O..
         #....###..
         #OO..#....
-    " => 136, 64,
-}
+    "
+);

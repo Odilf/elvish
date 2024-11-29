@@ -3,8 +3,6 @@ use std::collections::{BinaryHeap, HashMap};
 use glam::I64Vec2;
 use ndarray::{Array1, Array2};
 
-elvish::day!(17);
-
 type Vec2 = I64Vec2;
 
 fn parse(input: &str) -> Array2<i64> {
@@ -127,20 +125,22 @@ fn solve(map: &Array2<i64>, min_straight: i64, max_straight: i64) -> i64 {
     panic!("No solution found");
 }
 
+#[elvish::solution(day = 17, example = 102)]
 fn part1(input: &str) -> i64 {
     let map = parse(input);
 
     solve(&map, 0, 3)
 }
 
+#[elvish::solution(day = 17, example = [94, 71])]
 fn part2(input: &str) -> i64 {
     let map = parse(input);
 
     solve(&map, 4, 10)
 }
 
-elvish::examples! {
-    "
+elvish::example!(
+    part1: "
         2413432311323
         3215453535623
         3255245654254
@@ -154,18 +154,30 @@ elvish::examples! {
         1224686865563
         2546548887735
         4322674655533
-    " => 102, 94,
-}
+    ",
 
-#[test]
-fn part2_2() {
-    let input = elvish::indoc! { "
+    // TODO: Not optimal to repeat the input
+    part2: "
+        2413432311323
+        3215453535623
+        3255245654254
+        3446585845452
+        4546657867536
+        1438598798454
+        4457876987766
+        3637877979653
+        4654967986887
+        4564679986453
+        1224686865563
+        2546548887735
+        4322674655533
+    ",
+
+    part2: "
         111111111111
         999999999991
         999999999991
         999999999991
         999999999991
-    " };
-
-    assert_eq!(part2(input), 71);
-}
+    ",
+);

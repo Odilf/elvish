@@ -3,8 +3,6 @@ use std::{
     ops::{Index, IndexMut},
 };
 
-elvish::day!(19);
-
 #[derive(Debug, Clone)]
 struct Part<T = i64> {
     /// Order: a, m, s, x (alphabetical)
@@ -48,7 +46,6 @@ impl<T> IndexMut<&str> for Part<T> {
         &mut self.data[Self::index(index)]
     }
 }
-
 
 struct Rule<'a> {
     subpart: &'a str,
@@ -118,6 +115,7 @@ peg::parser! {
     }
 }
 
+#[elvish::solution(day = 19, example = 19114)]
 fn part1(input: &str) -> i64 {
     let [workflows, parts] = input.split("\n\n").collect::<Vec<_>>()[..] else {
         panic!("Invalid input");
@@ -217,6 +215,7 @@ impl Part<Range> {
     }
 }
 
+#[elvish::solution(day = 19, example = 167_409_079_868_000)]
 fn part2(input: &str) -> i64 {
     let [workflows, _] = input.split("\n\n").collect::<Vec<_>>()[..] else {
         panic!("Invalid input");
@@ -229,7 +228,12 @@ fn part2(input: &str) -> i64 {
 
     let mut queue = Vec::new();
 
-    queue.push(("in", Part { data: Default::default() }));
+    queue.push((
+        "in",
+        Part {
+            data: Default::default(),
+        },
+    ));
 
     let mut accepted = Vec::new();
 
@@ -258,8 +262,7 @@ fn part2(input: &str) -> i64 {
     accepted.iter().map(|part| part.value()).sum()
 }
 
-
-elvish::examples! {
+elvish::example!(
     "
         px{a<2006:qkq,m>2090:A,rfg}
         pv{a>1716:R,A}
@@ -278,5 +281,5 @@ elvish::examples! {
         {x=2036,m=264,a=79,s=2244}
         {x=2461,m=1339,a=466,s=291}
         {x=2127,m=1623,a=2188,s=1013}
-    " => 19114, 167_409_079_868_000,
-}
+    "
+);

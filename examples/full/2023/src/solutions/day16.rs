@@ -4,8 +4,6 @@ use either::Either;
 use glam::I64Vec2;
 use rayon::prelude::*;
 
-elvish::day!(16);
-
 #[derive(Copy, Clone, Debug, Hash, PartialEq, Eq)]
 enum Tile {
     Splitter {
@@ -114,6 +112,7 @@ fn energize(start: I64Vec2, beam: Beam, map: &HashMap<I64Vec2, Tile>) -> HashSet
     energized
 }
 
+#[elvish::solution(day = 16, example = 46)]
 fn part1(input: &str) -> i64 {
     let map = parse(input);
 
@@ -128,6 +127,7 @@ fn part1(input: &str) -> i64 {
     .len() as i64
 }
 
+#[elvish::solution(day = 16, example = 51)]
 fn part2(input: &str) -> i64 {
     let map = parse(input);
     let map_size = I64Vec2 {
@@ -154,7 +154,7 @@ fn part2(input: &str) -> i64 {
         .unwrap() as i64
 }
 
-elvish::examples! {
+elvish::example!(
     r"
         .|...\....
         |.-.\.....
@@ -166,5 +166,5 @@ elvish::examples! {
         .-.-/..|..
         .|....-|.\
         ..//.|....
-    " => 46, 51,
-}
+    "
+);

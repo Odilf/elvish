@@ -1,7 +1,5 @@
 use rayon::prelude::*;
 
-elvish::day!(18);
-
 type Vec2 = glam::I64Vec2;
 
 peg::parser! {
@@ -157,6 +155,7 @@ impl FromIterator<Wall> for Map {
     }
 }
 
+#[elvish::solution(day = 18, example = 62)]
 fn part1(input: &str) -> i64 {
     let instructions = input.lines().map(|line| parser::instruction(line).unwrap());
 
@@ -175,6 +174,7 @@ fn part1(input: &str) -> i64 {
         .area()
 }
 
+#[elvish::solution(day = 18, example = 952_408_144_115)]
 fn part2(input: &str) -> i64 {
     let instructions = input.lines().map(|line| parser::instruction(line).unwrap());
 
@@ -206,7 +206,7 @@ fn part2(input: &str) -> i64 {
         .area()
 }
 
-elvish::examples! {
+elvish::example!(
     "
         R 6 (#70c710)
         D 5 (#0dc571)
@@ -222,5 +222,5 @@ elvish::examples! {
         U 3 (#a77fa3)
         L 2 (#015232)
         U 2 (#7a21e3)
-    " => 62, 952_408_144_115,
-}
+    "
+);

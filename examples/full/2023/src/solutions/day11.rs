@@ -1,7 +1,5 @@
 use std::collections::HashSet;
 
-elvish::day!(11);
-
 type Vec2 = glam::I64Vec2;
 
 fn parse(input: &str, expansion_multiplier: i64) -> Vec<Vec2> {
@@ -58,16 +56,19 @@ fn solve(input: &str, expansion_multiplier: i64) -> i64 {
     count
 }
 
+#[elvish::solution(day = 11, example = 374)]
 fn part1(input: &str) -> i64 {
     solve(input, 2)
 }
 
+// Got the second example myself, because given example has different parameters
+#[elvish::solution(day = 11, example = 82000210)]
 fn part2(input: &str) -> i64 {
     solve(input, 1_000_000)
 }
 
-elvish::examples! {
-    r"
+elvish::example!(
+    "
         ...#......
         .......#..
         #.........
@@ -78,5 +79,5 @@ elvish::examples! {
         ..........
         .......#..
         #...#.....
-    " => 374, 82000210, // Got the second example myself, because given example has different parameters
-}
+    "
+);
