@@ -93,6 +93,8 @@ elvish::example!(
 
 # Usage
 
+> Note: The [examples](/examples/full/2023/) directory has a full implementation of the 2023 advent of code using elvish, for reference. 
+
 ## Installing
 
 Clone the template repo:
@@ -104,10 +106,14 @@ git clone https://github.com/odilf/elvish-template
 If you want to use a remote, change the url:
 
 ```bash
-git remote origin set-url your-repo-url
+git remote set-url origin your-repo-url
 ```
 
-Then, edit the `.env` by setting your session token and the year. 
+Then, edit the `.env.example` by setting your session token and the year, and make it the primary `.env` file. 
+
+```bash
+mv .env.example .env
+```
 
 <details>
 <summary> detailed instructions </summary>
