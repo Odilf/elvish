@@ -1,13 +1,32 @@
+//! # elvish
+//! 
+//! > Overengineered Advent of Code framework for Rust - not quite Santa's elves. 
+//! 
+//! elvish is a framework for writing your Advent of Code solutions with the least amount of boilerplate as possible. 
+//! 
+//! ## Features 
+//! 
+//! - Declare solutions with simple macro
+//! - Fetching and caching of user input
+//! - Run solutions as binary
+//! - Automatically copy solutions to clipboard
+//! - Simple and consice syntax to write out 90% of required tests
+//! - See the puzzle description as docs on the annotated function
+//! - Conditional compilation to compile a single day
+
+#![warn(missing_docs)]
+
 pub use elvish_core::*;
 pub use elvish_macros as macros;
 
-pub use color_eyre::eyre::{self, WrapErr as _};
+pub use color_eyre::eyre;
 pub use elvish_macros::{available_days, example, solution};
 pub use indoc::indoc;
 
+/// Convinience for declaring 25-sets with feature flags at once.
 pub mod declare {
     pub use elvish_macros::declare_modules as modules;
-    pub use elvish_macros::declare_run_fn as run_fns;
+    pub use elvish_macros::declare_run_fn as run_fn;
 }
 
 use clap::Parser;
@@ -25,7 +44,33 @@ pub fn copy_to_clipboard(input: &str) -> eyre::Result<()> {
     Ok(())
 }
 
-pub fn run<const YEAR: u16>(
+/// Runs elvish. 
+///
+/// This gives a cli program that can take a day, or auto detect it.
+///
+/// The two arguments needed can be obtained by using the provided macros
+/// [`available_days!()`] and [`declare::run_fn`].
+///
+/// # Example
+///
+/// ```no_run
+/// // In main.rs
+///
+/// use color_eyre::eyre;
+/// pub struct Solutions;
+/// 
+/// elvish::declare::run_fn!();
+/// 
+/// fn main() -> eyre::Result<()> {
+///     tracing_subscriber::fmt().init();
+///     dotenvy::dotenv()?;
+/// 
+///     elvish::run::<2023>(&elvish::available_days!(), run_day_part)?;
+/// 
+///     Ok(())
+/// }
+/// ```
+pub fn run<const YEAR: i16>(
     available_days: &[u8],
     run_day_part: impl Fn(u8, u8, &str) -> eyre::Result<String>,
 ) -> eyre::Result<()> {

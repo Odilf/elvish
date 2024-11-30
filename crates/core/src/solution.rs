@@ -1,17 +1,28 @@
+//! Traits for declaring solutions of advent of code puzzles, and functions for running them. 
+
 use std::fmt::Display;
 
-/// The solution of a part of a AOC puzzle. It takes the input as a string slice and returns some
-/// output.
+/// A solution of a part of an advent of code puzzle. 
+///
+/// It takes the input as a string slice and returns some output that can be converted to a string.
 pub trait Part<const PART: u8, const DAY: u8> {
+    /// Solves the puzzle for that part. 
     fn solve(input: &str) -> impl Display;
 }
 
+/// Solution for both parts of a day 
+///
+/// It is auto-implemented for any type that implements [`Part`] for both parts of
+/// a day. 
 pub trait Day<const DAY: u8>: Part<1, DAY> + Part<2, DAY> {
+    /// Solves the puzzle for that part 1 of the day. 
     fn part1(input: &str) -> impl Display;
+
+    /// Solves the puzzle for that part 2 of the day. 
     fn part2(input: &str) -> impl Display;
 }
 
-// Auto implement the `DaySolution` trait for any type that implements the `PartSolution` trait for a day
+// Auto implement the `Day` trait for any type that implements the `Part` trait for a day
 impl<T, const DAY: u8> Day<DAY> for T
 where
     T: Part<1, DAY> + Part<2, DAY>,
@@ -26,14 +37,21 @@ where
 }
 
 // Nicer API
-// TODO: Doc comments
+/// Run the solution of a given part for the given day, returning the result as a string. 
+///
+/// It is mostly used as a nicer way to not need to specify `<Solution as Part<X,
+/// Y>>::solve(input).to_string()`.
+///
+/// See also [`run_day`] to run the entire day. 
 pub fn run_day_part<Solutions: Part<PART, DAY>, const DAY: u8, const PART: u8>(
     input: &str,
 ) -> String {
     Solutions::solve(input).to_string()
 }
 
-// TODO: for this too
+/// Run the solution of both parts for a given day, returning the result as a string. 
+///
+/// See also [`run_day_part`] to run an individual part. 
 pub fn run_day<Solutions: Day<DAY>, const DAY: u8>(input: &str) -> [String; 2] {
     let part1 = run_day_part::<Solutions, DAY, 1>(input);
     let part2 = run_day_part::<Solutions, DAY, 2>(input);
@@ -41,6 +59,9 @@ pub fn run_day<Solutions: Day<DAY>, const DAY: u8>(input: &str) -> [String; 2] {
     [part1, part2]
 }
 
+/// Run a day dynamically (with the day itself specified at runtime).
+///
+/// Assumes there is a full advent of code solution. 
 pub fn run<
     Solutions: Day<1>
         + Day<2>

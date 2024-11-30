@@ -1,3 +1,6 @@
+//! Getting data from advent of code, and data required to get data from advent of code (year and
+//! session token).
+
 use color_eyre::eyre;
 use reqwest::blocking::Client;
 
@@ -6,31 +9,34 @@ use reqwest::blocking::Client;
 pub struct Day {
     /// The puzzle's input, which is generated uniquely for each user.
     pub input: String,
+
+    /// The description for part one of the puzzle
     pub description_1: String,
+
+    /// Description for part two of the puzzle. It is `None` part 1 hasn't completed yet.
     pub description_2: Option<String>,
 }
 
-pub fn get_env_year() -> eyre::Result<u16> {
+/// Gets the year from the environment.
+pub fn get_env_year() -> eyre::Result<i16> {
     Ok(std::env::var("YEAR")?.parse()?)
 }
 
-pub fn get_year() -> eyre::Result<u16> {
-    match get_env_year() {
-        Ok(year) => Ok(year),
-        Err(_) => {
-            tracing::warn!("No YEAR environment variable found, using current year");
-            let year = jiff::Zoned::now().year();
-            Ok(year as u16)
-        }
-    }
+/// Gets the year from the environment, or returns the current year
+pub fn get_year() -> i16 {
+    get_env_year().unwrap_or_else(|_| {
+        tracing::warn!("No YEAR environment variable found, using current year");
+        jiff::Zoned::now().year()
+    })
 }
 
+/// Gets the session token from the environment
 pub fn get_session_token() -> eyre::Result<String> {
     Ok(std::env::var("SESSION_TOKEN")?)
 }
 
 /// Get the day's [data](Day).
-pub fn get(year: u16, day: u8, session_token: &str) -> eyre::Result<Day> {
+pub fn get(year: i16, day: u8, session_token: &str) -> eyre::Result<Day> {
     read_day(day).or_else(|_| {
         tracing::warn!("Day data not found in `.elvish`, fetching day...");
         eprintln!("Day data not found in `.elvish`, fetching day...");
@@ -44,7 +50,8 @@ pub fn get(year: u16, day: u8, session_token: &str) -> eyre::Result<Day> {
     })
 }
 
-pub fn fetch_day(year: u16, day: u8, session_token: &str) -> eyre::Result<Day> {
+/// Fetches the data for a day from the advent of code website. Not cached. 
+pub fn fetch_day(year: i16, day: u8, session_token: &str) -> eyre::Result<Day> {
     let client = reqwest::blocking::Client::new();
     let (desc1, desc2) = fetch_desc(&client, year, day, session_token)?;
 
@@ -55,6 +62,8 @@ pub fn fetch_day(year: u16, day: u8, session_token: &str) -> eyre::Result<Day> {
     })
 }
 
+/// Fetches some url formatting the cookies to include the session token in order to be valid for
+/// advent of code
 fn fetch_aoc(client: &Client, url: &str, session_token: &str) -> eyre::Result<String> {
     let response = client
         .get(url)
@@ -66,9 +75,10 @@ fn fetch_aoc(client: &Client, url: &str, session_token: &str) -> eyre::Result<St
     Ok(response)
 }
 
+/// Fetches the input for a day's puzzle
 fn fetch_day_input(
     client: &Client,
-    year: u16,
+    year: i16,
     day: u8,
     session_token: &str,
 ) -> eyre::Result<String> {
@@ -77,9 +87,11 @@ fn fetch_day_input(
     fetch_aoc(client, &url, session_token)
 }
 
+/// Fetches the descriptions for a day's puzzle. Returns a tuple of part 1's description and
+/// optionally part 2's description
 fn fetch_desc(
     client: &Client,
-    year: u16,
+    year: i16,
     day: u8,
     session_token: &str,
 ) -> eyre::Result<(String, Option<String>)> {

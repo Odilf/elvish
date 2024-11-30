@@ -7,7 +7,7 @@ edition = "2021"
 color-eyre = "0.6.3"
 dotenvy = "0.15.7"
 either = "1.13.0"
-elvish = { path = "../../.." }
+elvish = { path = "../../..", version = "*" }
 glam = "0.29.1"
 nalgebra = "0.33.2"
 ndarray = "0.16.1"
@@ -20,8 +20,9 @@ tracing-subscriber = "0.3.18"
 default = ["all", "both"]
 
 # Detected by `elvish`
-# TODO: Implement this
+# TODO: Implement these
 today = []
+generate-docs = []
 
 part1 = []
 part2 = []

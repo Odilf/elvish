@@ -4,7 +4,7 @@ mod solutions;
 
 pub struct Solutions;
 
-elvish::declare::run_fns!();
+elvish::declare::run_fn!();
 
 fn main() -> eyre::Result<()> {
     tracing_subscriber::fmt().init();
