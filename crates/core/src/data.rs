@@ -2,6 +2,7 @@
 //! session token).
 
 use color_eyre::eyre;
+use jiff::civil::Time;
 use reqwest::blocking::Client;
 
 /// Data for a day's puzzle.
@@ -35,8 +36,45 @@ pub fn get_session_token() -> eyre::Result<String> {
     Ok(std::env::var("SESSION_TOKEN")?)
 }
 
+/// Checks whether the specified is accessible.
+///
+/// Assumes system time is correct. 
+pub fn is_day_accessible(year: i16, day: u8) -> bool {
+    let tz = jiff::tz::offset(-5).to_time_zone();
+    let now = jiff::Timestamp::now().to_zoned(tz.clone());
+
+    // If it's a previous year, it's always automatically valid.
+    // Course check of the same thing as below.
+    if now.year() > year {
+        return true;
+    }
+
+    let unlocks = jiff::Zoned::now()
+        .with()
+        .year(year)
+        .day(day as i8)
+        .month(12)
+        .time(Time::midnight())
+        .build()
+        .expect("Date should be valid")
+        .with_time_zone(tz);
+
+    if now > unlocks {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 /// Get the day's [data](Day).
 pub fn get(year: i16, day: u8, session_token: &str) -> eyre::Result<Day> {
+    if !is_day_accessible(year, day) {
+        let msg = format!("Day {day} is not accessible yet!");
+        tracing::warn!(msg);
+        eprintln!("{msg}");
+        eyre::bail!(msg);
+    }
+
     read_day(day).or_else(|_| {
         tracing::warn!("Day data not found in `.elvish`, fetching day...");
         eprintln!("Day data not found in `.elvish`, fetching day...");
@@ -50,7 +88,7 @@ pub fn get(year: i16, day: u8, session_token: &str) -> eyre::Result<Day> {
     })
 }
 
-/// Fetches the data for a day from the advent of code website. Not cached. 
+/// Fetches the data for a day from the advent of code website. Not cached.
 pub fn fetch_day(year: i16, day: u8, session_token: &str) -> eyre::Result<Day> {
     let client = reqwest::blocking::Client::new();
     let (desc1, desc2) = fetch_desc(&client, year, day, session_token)?;

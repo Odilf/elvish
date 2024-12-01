@@ -346,9 +346,3 @@ elvish::example!(
 );
 ```
 
-
-# Other
-
-## Future roadmap
-
-- [ ] Warn when day shouldn't be available yet
