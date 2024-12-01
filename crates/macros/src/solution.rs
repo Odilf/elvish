@@ -156,7 +156,7 @@ fn get_doc(day: Option<&LitInt>) -> Option<proc_macro2::TokenStream> {
     dotenvy::dotenv().ok()?;
     let session_token = elvish_core::data::get_session_token().ok()?;
     let year = elvish_core::data::get_env_year().ok()?;
-    let dat:a = elvish_core::data::get(year, day?.base10_parse().ok()?, &session_token).ok()?;
+    let data = elvish_core::data::get(year, day?.base10_parse().ok()?, &session_token).ok()?;
 
     let doc_comment = formatdoc!(
         "

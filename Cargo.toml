@@ -1,9 +1,12 @@
 [workspace.package]
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Odilf <odysseas.maheras@gmail.com>"]
 description = "Overengineered Advent of Code framework - not quite Santa's elves"
 license = "MIT"
 edition = "2021"
+homepage = "https://github.com/odilf/elvish"
+repository = "https://github.com/odilf/elvish"
+documentation = "https://docs.rs/elvish"
 
 [package]
 name = "elvish"
@@ -12,6 +15,9 @@ authors.workspace = true
 description.workspace = true
 license.workspace = true
 edition.workspace = true
+homepage.workspace = true
+repository.workspace = true
+documentation.workspace = true
 
 [dependencies]
 elvish-macros = { path = "crates/macros", version = "0.1.0" }
